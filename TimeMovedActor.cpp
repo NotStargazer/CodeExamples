@@ -41,3 +41,25 @@ void ATimeMovedActor::UpdateMove(bool Update)
 	bPlayerMoving = Update;
 }
 
+//-- PlayerCharacter.cpp --//
+void PlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	CurrentSpeed = GetCharacterMovement()->Velocity.Size();
+	CheckIfCharacterIsMoving();
+
+	Cooldown -= DeltaTime * GetPlayerSpeedRatio();
+}
+
+/// <summary>
+/// Gets a percentage between 0 to 1 based on the players stop speed to the players maximum speed.
+/// </summary>
+/// <returns>: Float ranging from 0 to 1</returns>
+float PlayerCharacter::GetPlayerSpeedPercentage() const
+{
+	float MaxSpeed = GetMovementComponent()->GetMaxSpeed();
+	float CurrentCharacterSpeed = GetMovementComponent()->Velocity.Size();
+
+	return (FMath::Clamp<float>(CurrentCharacterSpeed / MaxSpeed, 0, 1)) * SlowdownEffectMod;
+}
