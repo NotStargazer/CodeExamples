@@ -18,7 +18,7 @@ class FG19N20GP2_API ATimeMovedActor : public AActor
 
 private:
 	UPROPERTY()
-	AFG19n20GP2Character* Player;
+	PlayerCharacter* Player;
 
 public:
 	UPROPERTY()
